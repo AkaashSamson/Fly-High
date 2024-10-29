@@ -3,7 +3,7 @@ import json
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import base64
 
 # load_dotenv()

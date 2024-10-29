@@ -3,7 +3,7 @@ import os
 import json
 import firebase_admin
 from firebase_admin import credentials, firestore
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import base64
 
 # Load environment variables from .env file
