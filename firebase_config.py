@@ -1,15 +1,17 @@
 # firebase_config.py
 import os
+import json
 import firebase_admin
 from firebase_admin import credentials, firestore
 
+# Get the content of the service account key from an environment variable
+SERVICE_ACCOUNT_CONTENT = os.getenv('FIREBASE_APPLICATION_CREDENTIALS')
 
-
-# Get the path to the service account key from an environment variable
-service_account_path = os.getenv('FIREBASE_APPLICATION_CREDENTIALS')
+# Parse the JSON content
+service_account_info = json.loads(SERVICE_ACCOUNT_CONTENT)
 
 # Initialize Firebase Admin SDK
-cred = credentials.Certificate(service_account_path)
+cred = credentials.Certificate(service_account_info)
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()

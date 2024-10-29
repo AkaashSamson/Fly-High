@@ -1,16 +1,19 @@
-# google_drive.py
 import os
+import json
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
-# Get the path to the service account key from an environment variable
-SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+# Get the content of the service account key from an environment variable
+SERVICE_ACCOUNT_CONTENT = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 
-credentials = service_account.Credentials.from_service_account_file(
-    SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+# Parse the JSON content
+service_account_info = json.loads(SERVICE_ACCOUNT_CONTENT)
+
+credentials = service_account.Credentials.from_service_account_info(
+    service_account_info, scopes=SCOPES)
 drive_service = build('drive', 'v3', credentials=credentials)
 
 def upload_file(file_path, content_type):
