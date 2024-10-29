@@ -4,17 +4,21 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from dotenv import load_dotenv
+import base64
 
-# Load environment variables from .env file
-load_dotenv()
+# load_dotenv()
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 # Get the content of the service account key from an environment variable
 SERVICE_ACCOUNT_CONTENT = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 
+# Decode from Base64, then load the JSON
+if SERVICE_ACCOUNT_CONTENT:
+    credentials_json = base64.b64decode(SERVICE_ACCOUNT_CONTENT).decode()
+    service_account_info = json.loads(credentials_json)
 # Parse the JSON content
-service_account_info = json.loads(SERVICE_ACCOUNT_CONTENT)
+# service_account_info = json.loads(SERVICE_ACCOUNT_CONTENT)
 
 credentials = service_account.Credentials.from_service_account_info(
     service_account_info, scopes=SCOPES)
