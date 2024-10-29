@@ -1,0 +1,433 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+
+body {
+    background: linear-gradient(to top, #d1c8bb 10%, #526e87 50%, #e0ad93 60%, #d1c8bb 100%);
+    margin: 0;
+    padding: 0;
+    font-family: 'Amatic SC', cursive;
+    height: 100%;
+
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    height: 100%;
+}
+
+.contain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+}
+
+.sky-gradient {
+    background: linear-gradient(to top, #f2c19f 0%, #fec9a7 25%, #44adca 55%, #212843 98%);
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.sky-theme {
+    background: linear-gradient(to top, #d1c8bb 0%, #44adca 15%, #212843 80%, #232a45 100%);
+    width: 100vw !important;
+    height: 100vh !important;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-navbar {
+    background: linear-gradient(to top, #212843, #0d1b2a);
+    /* Example gradient */
+    border-bottom: 0.5px solid white;
+    /* Example border color */
+}
+
+/* static/styles.css */
+
+/* Transparent Card */
+.transparent-card {
+    background-color: transparent !important;
+    /* White background with 50% opacity */
+    color: #ffffff !important;
+    /* Text color */
+    border: 1px solid #d1c8bb !important;
+    /* Light border */
+    border-radius: 10px;
+    /* Rounded corners */
+    padding: 20px;
+    /* Padding */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+}
+
+/* Custom Select Styles */
+.form-select.custom-select.select-transparent {
+    background-color: transparent !important;
+    /* Transparent background */
+    color: #ffffff !important;
+    /* Text color */
+    border: 1px solid #ffffff !important;
+    /* padding: 5px 22px !important; */
+    /* White border */
+    font-family: "Amatic SC", cursive !important;
+    /* Padding */
+    font-size: 1.8rem !important;
+    /* Font size */
+    appearance: none !important;
+    /* Remove default arrow */
+    -webkit-appearance: none !important;
+    /* Remove default arrow for Safari */
+    -moz-appearance: none !important;
+    /* Remove default arrow for Firefox */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path fill="%23ffffff" d="M0 0 L5 5 L10 0 Z"/></svg>') !important;
+    /* Custom arrow */
+    background-repeat: no-repeat !important;
+    /* No repeat */
+    background-position: right 10px top 50% !important;
+    /* Position the arrow */
+    background-size: 10px 10px !important;
+    /* Size of the arrow */
+}
+
+.form-select.custom-select.select-transparent option {
+    background-color: rgba(33, 40, 67, 0.8) !important;
+    /* Translucent background */
+    color: #ffffff !important;
+    /* Text color */
+}
+
+/* Custom Select Focus Styles */
+.form-select.custom-select.select-transparent:focus {
+    outline: none !important;
+    /* Remove default outline */
+    border-color: #ffffff !important;
+    /* Border color on focus */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8) !important;
+    /* Whitish glow effect */
+    /* Box shadow on focus */
+}
+
+.btn-custom {
+    background-color: transparent !important;
+    /* Transparent background */
+    color: #ffffff !important;
+    /* Text color */
+    border: 1px solid #ffffff !important;
+    /* White border */
+    /* Rounded corners */
+    /* Padding */
+    font-size: 1rem !important;
+    /* Font size */
+    cursor: pointer !important;
+
+    /* font-family: "Amatic SC", cursive !important; */
+
+    /* Pointer cursor */
+}
+
+.btn-custom:hover {
+    border-color: #ffffff;
+    /* Border color on focus */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    /* Slightly opaque on hover */
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+.btn-custom:focus {
+    outline: none !important;
+    /* Remove default outline */
+    border-color: #ffffff !important;
+    /* Border color on focus */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8) !important;
+    /* Box shadow on focus */
+}
+
+.font-amatic {
+    font-family: 'Amatic SC', cursive !important;
+    font-size: 1.8rem !important;
+    font-weight: 400;
+}
+
+.sketchy-border {
+    border: 2px dashed rgba(100, 100, 100, 0.5);
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+}
+
+.sketchy-border:hover {
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+    font-family: 'Amatic SC', cursive;
+    font-size: 10rem;
+    font-weight: 400;
+    text-align: center;
+    color: #ffffff;
+    margin-top: 40px;
+    text-shadow:
+        0 0 5px rgba(255, 255, 255, 0.8),
+        0 0 10px rgba(255, 255, 255, 0.6),
+        0 0 20px rgba(130, 215, 255, 0.8),
+        0 0 30px rgba(130, 215, 255, 0.5),
+        0 0 40px rgba(90, 200, 255, 0.4);
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.sun {
+    position: absolute;
+    width: 95px;
+    height: 95px;
+    background: radial-gradient(circle, #fbfae4, #fcfbe5);
+    border-radius: 50%;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 60px 60px #fde3b9;
+}
+
+.sunshine {
+    position: absolute;
+    width: 95px;
+    height: 95px;
+    background: radial-gradient(circle, #fbfae4, #faf0c9);
+    border-radius: 50%;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 60px 60px #fde3b9;
+    animation: rotate 5s linear infinite;
+}
+
+.cloud {
+    position: absolute;
+    background: radial-gradient(ellipse, #627b90 30%, #a89b9d 50%, #fcd5a9 65%, #fcf3d0 75%);
+    border-radius: 50%;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0.8;
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: radial-gradient(closest-corner, #627b90 35%, #d6ab9a 50%, #fcd5a9 60%, #fcf3d0 75%);
+    border-radius: 50%;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cloud::after {
+    background: radial-gradient(closest-corner, #627b90 50%, #a89b9d 60%, #fcd5a9 70%, #fdedc0 80%);
+
+}
+
+.cloud1 {
+    width: 1200px;
+    height: 600px;
+    bottom: -300px;
+    left: -600px;
+}
+
+.cloud1::before {
+    width: 600px;
+    height: 250px;
+    bottom: 150px;
+    left: 800px;
+}
+
+.cloud1::after {
+    width: 700px;
+    height: 400px;
+    bottom: 100px;
+    left: 300px;
+}
+
+.cloud2 {
+    width: 1200px;
+    height: 600px;
+    bottom: -300px;
+    right: -600px;
+}
+
+.cloud2::before {
+    width: 600px;
+    height: 250px;
+    bottom: 150px;
+    right: 800px;
+}
+
+.cloud2::after {
+    width: 700px;
+    height: 400px;
+    bottom: 100px;
+    right: 300px;
+}
+
+
+
+@keyframes twinkler {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+}
+
+
+.star {
+    width: 2px;
+    height: 2px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    box-shadow:
+        0 0 3px 1px rgba(255, 255, 255, 0.8),
+        /* Inner glow */
+        0 0 20px 4px rgba(255, 255, 255, 0.5),
+        /* First layer */
+        0 0 32px 6px rgba(255, 255, 255, 0.3),
+        /* Second layer */
+        0 0 52px 10px rgba(255, 255, 255, 0.15);
+    /* Outer layer */
+    animation: twinkle 2s infinite alternate;
+}
+
+.star.large {
+    width: 4px;
+    height: 4px;
+}
+
+.star.vlarge {
+    width: 5px;
+    height: 5px;
+}
+
+.star.medium {
+    width: 3px;
+    height: 3px;
+}
+
+.star.small {
+    width: 1px;
+    height: 1px;
+}
+
+.star.quick {
+    animation-duration: 1s;
+}
+
+.star.diff {
+    background-color: #FFD27F;
+    /* Warm amber color */
+    box-shadow:
+        0 0 3px 1px rgba(255, 210, 127, 0.8),
+        /* Inner glow */
+        0 0 20px 6px rgba(255, 210, 127, 0.5),
+        /* First layer */
+        0 0 32px 10px rgba(255, 210, 127, 0.3),
+        /* Second layer */
+        0 0 52px 18px rgba(255, 210, 127, 0.15);
+    /* Outer layer */
+    animation: twinkle 3s infinite alternate;
+
+}
+
+.stars-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.star-new {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 1.5s infinite alternate;
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0.2;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+.footer {
+    font-family: 'Amatic SC', cursive;
+    font-size: 1.5rem;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-shadow:
+        0 0 5px rgba(255, 255, 255, 0.8),
+        0 0 10px rgba(255, 255, 255, 0.6),
+        0 0 20px rgba(130, 215, 255, 0.8),
+        /* Light blue */
+        0 0 30px rgba(130, 215, 255, 0.5),
+        /* Light blue */
+        0 0 40px rgba(90, 130, 255, 0.4);
+    /* Slightly darker blue */
+}
+
+/* static/styles.css */
+
+/* Transparent Container */
+.transparent-container {
+    background-color: rgba(255, 255, 255, 0.5);
+
+    /* Optional: Add padding */
+}
+
+
+@media (max-width: 768px) {
+    .transparent-card {
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .btn-custom {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+}

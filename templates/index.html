@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="sky-gradient">
+    <div id="starsContainer"></div>
+
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-content">
+                <form class="d-flex" method="POST" action="/">
+                    {{ form.hidden_tag() }}
+
+                    <div class="form-group me-2">
+                        {{ form.semester(class="form-select custom-select select-transparent") }}
+                    </div>
+                    <div class="form-group me-2">
+                        {{ form.branch(class="form-select custom-select select-transparent") }}
+                    </div>
+                    <button type="submit" class="btn btn-outline-light btn-custom font-amatic">Fly</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="sunshine"></div>
+
+    <!--Title -->
+    <h1 class="title" style="position: absolute; top: 10%;">FLY HIGH</h1>
+
+    <!--Clouds -->
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+    <footer class="footer" style="position: absolute; bottom: -6%; width: 100%;">
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <p>&copy; 2024 Fly High. All rights reserved.</p>
+
+            </div>
+
+
+
+        </div>
+    </footer>
+
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function createStars() {
+        const starsContainer = document.getElementById('starsContainer');
+        const isMobile = window.innerWidth <= 768;
+        const numberOfStars = isMobile ? 50 : 150;
+        const yellowStars = isMobile ? 20 : 50;
+
+        starsContainer.innerHTML = ''; // Clear existing stars
+
+        for (let i = 0; i < yellowStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star diff';
+
+            // Random position with more density at the upper region
+            const x = Math.random() * 100;
+            const y = Math.random() * Math.random() * 50; // More stars at the top
+
+            // Random size
+            const size = Math.random() * 3;
+
+            // Random animation delay
+            const delay = Math.random() * 2;
+
+            star.style.left = `${x}%`;
+            star.style.top = `${y}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.animationDelay = `${delay}s`;
+
+            starsContainer.appendChild(star);
+        }
+
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+
+            // Random position with more density at the upper region
+            const x = Math.random() * 100;
+            const y = Math.random() * Math.random() * 100; // More stars at the top
+
+            // Random size
+            const size = Math.random() * 3;
+
+            // Random animation delay
+            const delay = Math.random() * 2;
+
+            star.style.left = `${x}%`;
+            star.style.top = `${y}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.animationDelay = `${delay}s`;
+
+            starsContainer.appendChild(star);
+        }
+    }
+
+    // Create stars on load
+    createStars();
+
+    // Recreate stars on window resize
+    window.addEventListener('resize', createStars);
+</script>
+<!-- Footer -->
+
+{% endblock %}
