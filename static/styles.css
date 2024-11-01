@@ -155,6 +155,39 @@ html {
     /* Box shadow on focus */
 }
 
+
+.btn-kebab {
+    background-color: transparent !important;
+    /* Transparent background */
+    color: #ffffff !important;
+    /* Text color */
+    border: 0px solid #ffffff !important;
+    /* White border */
+    /* Rounded corners */
+    /* Padding */
+    font-size: 1rem !important;
+    /* Font size */
+    cursor: pointer !important;
+
+    /* font-family: "Amatic SC", cursive !important; */
+
+    /* Pointer cursor */
+}
+
+.btn-kebab:hover {
+    border-color: #ffffff;
+    /* Border color on focus */
+    /* Slightly opaque on hover */
+}
+
+.btn-kebab:focus {
+    outline: none !important;
+    /* Remove default outline */
+    /* Border color on focus */
+    /* Box shadow on focus */
+}
+
+
 .font-amatic {
     font-family: 'Amatic SC', cursive !important;
     font-size: 1.8rem !important;

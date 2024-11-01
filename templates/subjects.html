@@ -5,40 +5,51 @@
 {% block content %}
 
 <div class="container-fluid p-0">
-
-
-    <div class="sky-theme d-flex flex-column justify-content-center align-items-center">
+    <div class="sky-theme d-flex flex-column justify-content-evenly align-items-start py-5 px-2">
         <div id="starsContainer"></div>
 
+        <div class="container">
 
-        <div class="container text-center">
-            <h1 class="text-light mb-5">Sem {{ semester }} - {{ branch }}</h1>
-
-            <!-- Form in a transparent card -->
-            <div style="position: absolute; top: 20px; left: 20px;">
-                <form class="d-flex" method="POST" action="">
-                    {{ form.hidden_tag() }}
-                    <div class="form-group me-2">
-                        {{ form.subject(class="form-control select-transparent") }}
-                    </div>
-                    <button type="submit" class="btn btn-custom ">Add Subject</button>
-                </form>
-            </div>
-
-            <!-- Home Button -->
-            <div style="position: absolute; top: 20px; right: 20px;">
-                <a href="{{ url_for('index') }}" class="btn btn-custom">Home</a>
+            <!-- Navbar with Home and Add Subject buttons -->
+            <div class="d-flex justify-content-between align-items-center mb-5 gap-3">
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('index') }}" class="btn btn-custom">Home</a>
+                    <button type="button" class="btn btn-custom" data-bs-toggle="modal"
+                        data-bs-target="#addSubjectModal">Add Subject</button>
+                </div>
+                <h1 class="text-light">Sem {{ semester }} - {{ branch }}</h1>
             </div>
 
             <!-- Subjects Cards -->
-            <div class="row justify-content-center">
-                {% for subject in subjects %}
+            <div class="row justify-content-center m-4 m-sm-8">
+                {% for subject_id, subject_name in subjects.items() %}
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="card h-100 text-center transparent-card" style="border-radius: 20px;">
-                        <div class="card-body d-flex flex-column justify-content-between">
-                            <h5 class="card-title text-white font-weight-bold">{{ subject }}</h5>
-                            <a href="{{ url_for('units', semester=semester, branch=branch, subject=subject) }}"
-                                class="btn btn-custom mt-3">View Units</a>
+                    <div class="card transparent-card container p-3 p-lg-4 justify-content-center"
+                        style="border-radius: 20px;">
+                        <div class="row gx-2 gy-2 justify-content-lg-center">
+                            <h5 class="card-title text-white font-weight-bold col-7 col-lg-9 order-lg-1 text-lg-center">
+                                {{
+                                subject_name }}
+                            </h5>
+                            <a href=" {{ url_for('units', semester=semester, branch=branch, subject=subject_id) }}"
+                                class="btn btn-custom col-4 col-lg-6 order-lg-3">View</a>
+                            <!-- Dropdown menu for edit/delete -->
+                            <div class="dropdown col-1 col-lg-1 order-lg-2 align-items-center">
+                                <button class="btn btn-kebab" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+
+
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#editSubjectModal" data-subject="{{ subject_id }}">Edit</a>
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ url_for('delete_subject', semester=semester, branch=branch, subject=subject_id) }}">Delete</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -47,10 +58,69 @@
         </div>
     </div>
 </div>
+
+<!-- Add Subject Modal -->
+<div class="modal fade" id="addSubjectModal" tabindex="-1" aria-labelledby="addSubjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSubjectModalLabel">Add Subject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="">
+                <div class="modal-body">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        <label for="subjectName" class="form-label">Subject Name</label>
+                        {{ form.subject(class="form-control", id="subjectName") }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Subject</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Subject Modal -->
+<div class="modal fade" id="editSubjectModal" tabindex="-1" aria-labelledby="editSubjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editSubjectModalLabel">Edit Subject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ url_for('edit_subject', semester=semester, branch=branch, subject='') }}"
+                id="editSubjectForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="newSubjectName" class="form-label">New Subject Name</label>
+                        <input type="text" class="form-control" id="newSubjectName" name="new_subject_name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
 <script>
+    const editSubjectModal = document.getElementById('editSubjectModal');
+    editSubjectModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const subject = button.getAttribute('data-subject');
+        const form = document.getElementById('editSubjectForm');
+        form.action = "{{ url_for('edit_subject', semester=semester, branch=branch, subject='') }}" + subject;
+    });
+
     function createStars() {
         const starsContainer = document.getElementById('starsContainer');
         const isMobile = window.innerWidth <= 768;
