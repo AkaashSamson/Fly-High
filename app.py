@@ -59,7 +59,7 @@ def delete_subject():
 
 @app.route('/units/<semester>/<branch>/<subject>', methods=['GET', 'POST'])
 def units(semester, branch, subject):
-    units = ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4']
+    units = ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4', 'PYQ soln']
     return render_template('units.html', semester=semester, branch=branch, subject=subject, units=units)
 
 @app.route('/notes/<semester>/<branch>/<subject>/<unit>', methods=['GET', 'POST'])
