@@ -124,4 +124,4 @@ def delete_note():
     return redirect(url_for('notes', semester=semester, branch=branch, subject=subject, unit=unit))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
