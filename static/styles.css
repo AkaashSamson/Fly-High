@@ -437,7 +437,6 @@ html {
 .transparent-container {
     background-color: rgba(255, 255, 255, 0.5);
 
-    /* Optional: Add padding */
 }
 
 
@@ -462,5 +461,32 @@ html {
 
     .container {
         padding: 0 15px;
+    }
+
+    .cloud {
+        top: 75%;
+    }
+
+    .cloud::after {
+        bottom: 29%;
+        width: 800px;
+    }
+
+    .cloud2::before {
+        width: 300px;
+        height: 150px;
+        bottom: 75px;
+    }
+
+    .sun {
+        top: 70%;
+    }
+
+    .sunshine {
+        top: 78%;
+    }
+
+    .title {
+        font-size: 9rem;
     }
 }

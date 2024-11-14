@@ -10,6 +10,9 @@ from forms import SelectionForm, NewSubjectForm, UploadNoteForm
 # Load environment variables from .env file
 # load_dotenv()
 
+#temporary way to store sem 5 gdrive link
+sem5_link = 'https://drive.google.com/drive/folders/1xVrgKvfnt6pGlLCZkF_laqJLqrqwlore'
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -37,7 +40,7 @@ def subjects(semester, branch):
     
     subjects_ref = db.collection('sem-branch').document(f"{semester}-{branch}").collection('subjects')
     subjects = {doc.id: doc.get('name') for doc in subjects_ref.stream()}
-    return render_template('subjects.html', semester=semester, branch=branch, subjects=subjects, form=form)
+    return render_template('subjects.html', semester=semester, branch=branch, subjects=subjects, form=form, sem_link = sem5_link)
 
 @app.route('/edit_subject/<semester>/<branch>/<subject>', methods=['POST'])
 def edit_subject(semester, branch, subject):
@@ -121,4 +124,4 @@ def delete_note():
     return redirect(url_for('notes', semester=semester, branch=branch, subject=subject, unit=unit))
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)

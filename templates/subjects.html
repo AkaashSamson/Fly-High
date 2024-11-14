@@ -5,26 +5,29 @@
 {% block content %}
 
 <div class="container-fluid p-0">
-    <div class="sky-theme d-flex flex-column justify-content-evenly align-items-start py-5 px-2">
+    <div class="sky-theme d-flex flex-column justify-content-evenly align-items-start py-2 px-2">
         <div id="starsContainer"></div>
 
         <div class="container">
-
+            <h1 class="text-light text-center w-100">{{ branch }}</h1>
+            <br>
             <!-- Navbar with Home and Add Subject buttons -->
             <div class="d-flex justify-content-between align-items-center mb-5 gap-3">
                 <div class="d-flex gap-3">
                     <a href="{{ url_for('index') }}" class="btn btn-custom">Home</a>
+
                     <button type="button" class="btn btn-custom" data-bs-toggle="modal"
-                        data-bs-target="#addSubjectModal">Add Subject</button>
+                        data-bs-target="#addSubjectModal">Add</button>
                 </div>
-                <h1 class="text-light">Sem {{ semester }} - {{ branch }}</h1>
+                <a href="{{ sem_link }}" class="btn btn-custom">Sem {{semester}}</a>
+
             </div>
 
             <!-- Subjects Cards -->
-            <div class="row justify-content-center m-4 m-sm-8">
+            <div class="row justify-content-center m-1 m-sm-8">
                 {% for subject_id, subject_name in subjects.items() %}
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="card transparent-card container p-3 p-lg-4 justify-content-center"
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 col-12">
+                    <div class="card transparent-card container p-4 p-lg-4 justify-content-center"
                         style="border-radius: 20px;">
                         <div class="row gx-2 gy-2 justify-content-lg-center">
                             <h5 class="card-title text-white font-weight-bold col-7 col-lg-9 order-lg-1 text-lg-center">
