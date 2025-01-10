@@ -5,13 +5,13 @@ from flask_bootstrap import Bootstrap5
 # from dotenv import load_dotenv
 from firebase_config import db
 from google_drive import upload_file, drive_service
-from forms import SelectionForm, NewSubjectForm, UploadNoteForm
+from forms import SelectionForm, NewSubjectForm, UploadNoteForm, UploadLinkForm
 
 # Load environment variables from .env file
 # load_dotenv()
 
 #temporary way to store sem 5 gdrive link
-sem5_link = 'https://drive.google.com/drive/folders/1xVrgKvfnt6pGlLCZkF_laqJLqrqwlore'
+# sem5_link = 'https://drive.google.com/drive/folders/1xVrgKvfnt6pGlLCZkF_laqJLqrqwlore'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
@@ -40,7 +40,7 @@ def subjects(semester, branch):
     
     subjects_ref = db.collection('sem-branch').document(f"{semester}-{branch}").collection('subjects')
     subjects = {doc.id: doc.get('name') for doc in subjects_ref.stream()}
-    return render_template('subjects.html', semester=semester, branch=branch, subjects=subjects, form=form, sem_link = sem5_link)
+    return render_template('subjects.html', semester=semester, branch=branch, subjects=subjects, form=form)
 
 @app.route('/edit_subject/<semester>/<branch>/<subject>', methods=['POST'])
 def edit_subject(semester, branch, subject):
@@ -64,6 +64,8 @@ def delete_subject():
 def units(semester, branch, subject):
     units = ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4', 'PYQ soln']
     return render_template('units.html', semester=semester, branch=branch, subject=subject, units=units)
+
+
 
 @app.route('/notes/<semester>/<branch>/<subject>/<unit>', methods=['GET', 'POST'])
 def notes(semester, branch, subject, unit):
@@ -122,6 +124,56 @@ def delete_note():
         note_ref.delete()
     
     return redirect(url_for('notes', semester=semester, branch=branch, subject=subject, unit=unit))
+
+# @app.route('/links/<semester>/<branch>', methods=['GET', 'POST'])
+# def links(semester, branch):
+#     units = ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4', 'PYQ soln']
+#     return render_template('units.html', semester=semester, branch=branch, units=units)
+
+
+@app.route('/links/<semester>/<branch>', methods=['GET', 'POST'])
+def links(semester, branch):
+    form = UploadLinkForm()
+    if form.validate_on_submit():
+        link = form.link.data
+        link_name = form.link_name.data
+        db.collection('sem-branch').document(f"{semester}-{branch}").collection('links').add({
+            'name': link_name,
+            'folder_link': link
+        })
+        return redirect(url_for('links', semester=semester, branch=branch))
+    
+    links_ref = db.collection('sem-branch').document(f"{semester}-{branch}").collection('links')
+    links = [{'id': doc.id, 'name': doc.get('name'), 'file_link': doc.get('folder_link')} for doc in links_ref.stream()]
+
+    return render_template('links.html', semester=semester, branch=branch, links=links, form=form)
+
+
+@app.route('/edit_link/<semester>/<branch>/<link>', methods=['POST'])
+def edit_link(semester, branch, link):
+    new_link_name = request.form['new_link_name']
+    # Update the link name in Firestore
+    link_ref = db.collection('sem-branch').document(f"{semester}-{branch}").collection('links').document(link)
+    link_ref.update({'name': new_link_name})
+    return redirect(url_for('links', semester=semester, branch=branch))
+
+@app.route('/delete_link')
+def delete_link():
+    semester = request.args.get('semester')
+    branch = request.args.get('branch')
+    link = request.args.get('link')
+    
+    # Get the link document
+    link_ref = db.collection('sem-branch').document(f"{semester}-{branch}").collection('links').document(link)
+    link_doc = link_ref.get()
+    
+    if link_doc.exists:
+        # Get the file link from the link document
+        file_link = link_doc.get('folder_link')
+        link_ref.delete()
+    
+    return redirect(url_for('links', semester=semester, branch=branch))
+
 
 if __name__ == '__main__':
     app.run(debug=False)

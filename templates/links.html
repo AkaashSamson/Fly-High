@@ -1,55 +1,48 @@
 {% extends "base.html" %}
 
-{% block title %}Subjects{% endblock %}
+{% block title %}Links{% endblock %}
 
 {% block content %}
-
 <div class="container-fluid p-0">
-    <div class="sky-theme d-flex flex-column justify-content-evenly align-items-start py-2 px-2">
+    <div class="sky-theme d-flex flex-column justify-content-center align-items-start py-1 px-2">
         <div id="starsContainer"></div>
 
-        <div class="container">
-            <h1 class="text-light text-center w-100">{{ branch }}</h1>
-            <br>
-            <!-- Navbar with Home and Add Subject buttons -->
+        <div class="container mt-0">
+
+            <!-- Navbar with Home and Add Link buttons -->
             <div class="d-flex justify-content-between align-items-center mb-5 gap-3">
                 <div class="d-flex gap-3">
                     <a href="{{ url_for('index') }}" class="btn btn-custom">Home</a>
-
                     <button type="button" class="btn btn-custom" data-bs-toggle="modal"
-                        data-bs-target="#addSubjectModal">Add</button>
+                        data-bs-target="#addLinkModal">Add Link</button>
                 </div>
-                <a href="{{ url_for('links', semester=semester, branch=branch)}}" class="btn btn-custom">Links</a>
-
+                <h1 class="text-light text-end mx-auto">{{ semester }} - {{ branch }}</h1>
             </div>
 
-            <!-- Subjects Cards -->
-            <div class="row justify-content-center m-1 m-sm-8">
-                {% for subject_id, subject_name in subjects.items() %}
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 col-12">
-                    <div class="card transparent-card container p-4 p-lg-4 justify-content-center"
+            <!-- Links Cards -->
+            <div class="row justify-content-center m-8 m-sm-8">
+                {% for link in links %}
+                <div class="col-lg-6 col-md-6 col-sm-6 mb-4">
+                    <div class="card transparent-card container p-3 p-lg-3 justify-content-center"
                         style="border-radius: 20px;">
                         <div class="row gx-2 gy-2 justify-content-lg-center">
-                            <h5 class="card-title text-white font-weight-bold col-7 col-lg-9 order-lg-1 text-lg-center">
-                                {{
-                                subject_name }}
+                            <h5 class="card-title text-white font-weight-bold col-7">
+                                {{ link.name }}
                             </h5>
-                            <a href=" {{ url_for('units', semester=semester, branch=branch, subject=subject_id) }}"
-                                class="btn btn-custom col-4 col-lg-6 order-lg-3">View</a>
+                            <a href="{{ link.file_link }}" class="btn btn-custom col-4" target="_blank">View</a>
                             <!-- Dropdown menu for edit/delete -->
-                            <div class="dropdown col-1 col-lg-1 order-lg-2 align-items-center">
+                            <div class="dropdown col-1 align-items-center">
                                 <button class="btn btn-kebab" type="button" id="dropdownMenuButton"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-three-dots-vertical"></i>
-
-
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#editSubjectModal" data-subject="{{ subject_id }}">Edit</a>
+                                            data-bs-target="#editLinkModal" data-link="{{ link.id }}"
+                                            data-link-name="{{ link.name }}">Edit</a>
                                     </li>
                                     <li><a class="dropdown-item"
-                                            href="{{ url_for('delete_subject', semester=semester, branch=branch, subject=subject_id) }}">Delete</a>
+                                            href="{{ url_for('delete_link', semester=semester, branch=branch, link=link.id) }}">Delete</a>
                                     </li>
                                 </ul>
                             </div>
@@ -62,45 +55,49 @@
     </div>
 </div>
 
-<!-- Add Subject Modal -->
-<div class="modal fade" id="addSubjectModal" tabindex="-1" aria-labelledby="addSubjectModalLabel" aria-hidden="true">
+<!-- Add Link Modal -->
+<div class="modal fade" id="addLinkModal" tabindex="-1" aria-labelledby="addLinkModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addSubjectModalLabel">Add Subject</h5>
+                <h5 class="modal-title" id="addLinkModalLabel">Add Link</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="">
+            <form method="POST" action="" enctype="multipart/form-data">
                 <div class="modal-body">
                     {{ form.hidden_tag() }}
                     <div class="form-group">
-                        <label for="subjectName" class="form-label">Subject Name</label>
-                        {{ form.subject(class="form-control", id="subjectName") }}
+                        <label for="linkName" class="form-label">Link Name</label>
+                        {{ form.link_name(class="form-control", id="linkName") }}
+                    </div>
+                    <div class="form-group">
+                        <label for="linkFile" class="form-label">File</label>
+                        {{ form.link(class="form-control", id="linkFile") }}
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add Subject</button>
+                    <button type="submit" class="btn btn-primary">Upload Link</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Edit Subject Modal -->
-<div class="modal fade" id="editSubjectModal" tabindex="-1" aria-labelledby="editSubjectModalLabel" aria-hidden="true">
+<!-- Edit Link Modal -->
+<div class="modal fade" id="editLinkModal" tabindex="-1" aria-labelledby="editLinkModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editSubjectModalLabel">Edit Subject</h5>
+                <h5 class="modal-title" id="editLinkModalLabel">Edit Link</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="{{ url_for('edit_subject', semester=semester, branch=branch, subject='') }}"
-                id="editSubjectForm">
+            <form method="POST" action="{{ url_for('edit_link', semester=semester, branch=branch, link='') }}"
+                id="editLinkForm">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="newSubjectName" class="form-label">New Subject Name</label>
-                        <input type="text" class="form-control" id="newSubjectName" name="new_subject_name" required>
+                        <label for="newLinkName" class="form-label">New Link Name</label>
+                        <input type="text" class="form-control" id="newLinkName" name="new_link_name" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -116,12 +113,14 @@
 
 {% block scripts %}
 <script>
-    const editSubjectModal = document.getElementById('editSubjectModal');
-    editSubjectModal.addEventListener('show.bs.modal', function (event) {
+    const editLinkModal = document.getElementById('editLinkModal');
+    editLinkModal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget;
-        const subject = button.getAttribute('data-subject');
-        const form = document.getElementById('editSubjectForm');
-        form.action = "{{ url_for('edit_subject', semester=semester, branch=branch, subject='') }}" + subject;
+        const link = button.getAttribute('data-link');
+        const linkName = button.getAttribute('data-link-name');
+        const form = document.getElementById('editLinkForm');
+        form.action = "{{ url_for('edit_link', semester=semester, branch=branch, link='') }}" + link;
+        document.getElementById('newLinkName').value = linkName;
     });
 
     function createStars() {
@@ -185,6 +184,4 @@
     // Recreate stars on window resize
     window.addEventListener('resize', createStars);
 </script>
-<!-- Footer -->
-
 {% endblock %}

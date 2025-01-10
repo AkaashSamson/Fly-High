@@ -32,3 +32,8 @@ class UploadNoteForm(FlaskForm):
     note_name = StringField('Note Name', validators=[DataRequired()])
     file = FileField('Upload Note', validators=[DataRequired()])
     submit = SubmitField('Upload')
+
+class UploadLinkForm(FlaskForm):
+    link_name = StringField('Link Name', validators=[DataRequired()])
+    link = StringField('Link', validators=[DataRequired()])
+    submit = SubmitField('Upload')
